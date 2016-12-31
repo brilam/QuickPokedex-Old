@@ -28,33 +28,55 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is used to fetch information from PokeAPI, and this information is to be stored into
  * the Database.
  */
 public class PokeApiFetcher {
-  public static final String POKEMON_URL = "http://pokeapi.co/api/v2/pokemon/";
+  public static final String API_URL = "http://pokeapi.co/api/v2/";
+  public static final String POKEMON_URL = "pokemon/";
+  public static final String TYPES_URL = "type/";
   private static final int FAILED = -1;
 
   /**
-   * Returns the number of Pokemon in the Pokedex by making a GET request and parsing the count.
-   * 
+   * Returns the number of Pokemon in the Pokedex by making a GET request to the 
+   * Pokemon URL of PokeAPI and parsing the count.
    * @return the number of Pokemon in the Pokedex
    */
   public static int getNumPokemon() {
-    int count = FAILED;
+    int numPokemon = FAILED;
     try {
       // Makes a URL object given the Pokemon url
-      URL url = new URL(POKEMON_URL);
+      URL url = new URL(API_URL + POKEMON_URL);
       // Gets the response of the GET request
       String response = getApiResponse(url);
-      count = PokeApiParser.parseNumPokemon(response);
-      return count;
+      numPokemon = PokeApiParser.parseCount(response);
     } catch (IOException e) {
       System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
     }
-    return FAILED;
+    return numPokemon;
+  }
+  
+  /**
+   * Returns the number of types of Pokemon in the Pokedex by making a GET request
+   * to the Types URL of PokeAPI and parsing the count.
+   * @return the number of types of Pokemon
+   */
+  public static int getNumTypes() {
+    int numPokemon =  FAILED;
+    try {
+      // Makes a URL object given the Pokemon url
+      URL url = new URL(API_URL + TYPES_URL);
+      // Gets the response of the GET request
+      String response = getApiResponse(url);
+      numPokemon = PokeApiParser.parseCount(response);
+    } catch (IOException e) {
+      System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
+    }
+    return numPokemon;
   }
   
   /**
@@ -65,10 +87,10 @@ public class PokeApiFetcher {
     Pokemon pokemon = new Pokemon();
     try {
       // Makes a URL object given the Pokemon url
-      URL url = new URL(POKEMON_URL + id);
+      URL url = new URL(API_URL + POKEMON_URL + id);
       // Gets the response of the GET request
       String response = getApiResponse(url);
-      System.out.println(response);
+      PokeApiParser.parsePokemon(response);
     } catch (IOException e) {
       System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
     }
@@ -101,5 +123,9 @@ public class PokeApiFetcher {
     br.close();
     inputStream.close();
     return response;
+  }
+  
+  public static void main(String[] args) {
+    getPokemon(1);
   }
 }
