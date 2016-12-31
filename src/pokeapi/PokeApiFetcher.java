@@ -20,6 +20,7 @@
 
 package pokeapi;
 
+import pokedex.Pokemon;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,8 +28,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import pokedex.Pokemon;
 
 /**
  * This class is used to fetch information from PokeAPI, and this information is to be stored into
@@ -77,7 +76,6 @@ public class PokeApiFetcher {
 
   /**
    * Returns the API response from the GET request given a url.
-   * 
    * @param url the URL to connect to and make a GET request
    * @return the response that the API provides back
    * @throws IOException any errors that occurs such as a bad HTTP response, parsing issues with

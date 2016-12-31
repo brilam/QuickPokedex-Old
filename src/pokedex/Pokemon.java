@@ -283,4 +283,9 @@ public class Pokemon {
   public void addAbility(String ability) {
     abilities.add(ability);
   }
+  
+  @Override
+  public String toString() {
+    return getName();
+  }
 }

@@ -20,8 +20,6 @@
 
 package pokedex;
 
-import pokeapi.PokeApiFetcher;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +32,8 @@ public class Pokedex {
   /**
    * Creates a Pokedex that allows for the current total number of Pokemon.
    */
-  public Pokedex() {
-    pokedex = new ArrayList<>(PokeApiFetcher.getNumPokemon());
+  public Pokedex(int numPokemons) {
+    pokedex = new ArrayList<>(numPokemons);
   }
 
   /**
@@ -44,6 +42,21 @@ public class Pokedex {
    */
   public void addPokemon(Pokemon pokemon) {
     pokedex.add(pokemon);
+  }
+  
+  /**
+   * Returns the list of Pokemon in the Pokedex.
+   * @return the list of Pokemon in the Pokedex
+   */
+  public List<Pokemon> getPokedex() {
+    return pokedex;
+  }
+  
+  /**
+   * Clears the Pokedex.
+   */
+  public void clear() {
+    pokedex.clear();
   }
 
   @Override

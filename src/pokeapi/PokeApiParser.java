@@ -22,8 +22,6 @@ package pokeapi;
 
 import com.google.gson.stream.JsonReader;
 
-import pokedex.Pokemon;
-
 import java.io.IOException;
 import java.io.StringReader;
 
