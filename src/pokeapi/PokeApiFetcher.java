@@ -21,6 +21,7 @@
 package pokeapi;
 
 import pokedex.Pokemon;
+import util.Pair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,8 +29,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is used to fetch information from PokeAPI, and this information is to be stored into
@@ -80,6 +81,28 @@ public class PokeApiFetcher {
   }
   
   /**
+   * Returns a Pair of the Pokemon types (left side is ID, right side is
+   * type name).
+   * @return a Pair of Pokemon types (left side is ID, right side is
+   *         type name).
+   */
+  public static List<Pair<Integer,String>> getTypes() {
+    List<Pair<Integer,String>> types = new ArrayList<>();
+    try {
+      // Makes a URL object given the Pokemon url
+      URL url = new URL(API_URL + TYPES_URL);
+      // Gets the response of the GET request
+      String response = getApiResponse(url);
+      // Gets an ArrayList of types as pairs
+      types = PokeApiParser.parseTypes(response);
+      
+    } catch (IOException e) {
+      System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
+    }
+    return types;
+  }
+  
+  /**
    * Returns a newly created Pokemon object to represent a Pokemon.
    * @param id the id of the Pokemon
    */
@@ -126,6 +149,6 @@ public class PokeApiFetcher {
   }
   
   public static void main(String[] args) {
-    getPokemon(1);
+    getTypes();
   }
 }
