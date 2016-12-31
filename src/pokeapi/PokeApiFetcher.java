@@ -28,13 +28,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import pokedex.Pokemon;
+
 /**
  * This class is used to fetch information from PokeAPI, and this information is to be stored into
  * the Database.
  */
 public class PokeApiFetcher {
   public static final String POKEMON_URL = "http://pokeapi.co/api/v2/pokemon/";
-  public static final int FAILED = -1;
+  private static final int FAILED = -1;
 
   /**
    * Returns the number of Pokemon in the Pokedex by making a GET request and parsing the count.
@@ -54,6 +56,23 @@ public class PokeApiFetcher {
       System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
     }
     return FAILED;
+  }
+  
+  /**
+   * Returns a newly created Pokemon object to represent a Pokemon.
+   * @param id the id of the Pokemon
+   */
+  public static void getPokemon(int id) {
+    Pokemon pokemon = new Pokemon();
+    try {
+      // Makes a URL object given the Pokemon url
+      URL url = new URL(POKEMON_URL + id);
+      // Gets the response of the GET request
+      String response = getApiResponse(url);
+      System.out.println(response);
+    } catch (IOException e) {
+      System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
+    }
   }
 
   /**
