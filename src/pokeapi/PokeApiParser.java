@@ -99,6 +99,7 @@ public class PokeApiParser {
         break;
       case "abilities":
         jsonReader.beginArray();
+        break;
       default:
         // Never reached
     }
