@@ -34,8 +34,6 @@ import java.util.List;
  * A class used to parse the JSON from the response after making a PokeAPI GET request.
  */
 public class PokeApiParser {
-  private static final int NUM_OBJECTS = 17;
-
   /**
    * Given an API response made to the Pokemon or Types URL, parse the number of Pokemon in the
    * Pokedex or the number of types of Pokemon.
@@ -78,19 +76,31 @@ public class PokeApiParser {
     // Creates a JsonParser object to parse JSON
     JsonParser jsonParser = new JsonParser();
     // Gets the results array
-    JsonArray formsArray =
-        jsonParser.parse(jsonReader).getAsJsonObject().get("forms").getAsJsonArray();
-    JsonObject formsObj =  formsArray.get(0).getAsJsonObject();
-    String name = formsObj.get("name").toString();
-    // Gets the results array
-    JsonArray statsArray =
-        jsonParser.parse(jsonReader).getAsJsonObject().get("stats").getAsJsonArray();
-    JsonObject statsObj =  formsArray.get(0).getAsJsonObject();
-    System.out.println(statsObj);
+    JsonObject jsonObj =
+        jsonParser.parse(jsonReader).getAsJsonObject();
+    JsonObject formsObj = jsonObj.get("forms").getAsJsonArray().get(0).getAsJsonObject();
+    String name = formsObj.get("name").getAsString();
+    Double weight = jsonObj.get("weight").getAsDouble() / 10;
     
     // Creates a new Pokemon
     Pokemon pokemon = new Pokemon(); 
     pokemon.setName(name);
+    pokemon.setWeight(weight);
+    
+    
+    // Gets all their stats
+    System.out.println(jsonObj.get("stats").getAsJsonArray().get(0));
+    System.out.println(jsonObj.get("stats").getAsJsonArray().get(1));
+    System.out.println(jsonObj.get("stats").getAsJsonArray().get(2));
+    System.out.println(jsonObj.get("stats").getAsJsonArray().get(3));
+    System.out.println(jsonObj.get("stats").getAsJsonArray().get(4));
+    System.out.println(jsonObj.get("stats").getAsJsonArray().get(5));
+
+    // Gets all the types
+    System.out.println(jsonObj.get("types").getAsJsonArray());
+
+    
+   
 
 
 

@@ -31,7 +31,7 @@ public class Pokemon {
   private int id;
   private String name;
   private int baseExperience;
-  private int weight;
+  private double weight;
   private List<String> abilities;
   private List<String> moves;
   private int hp;
@@ -104,7 +104,7 @@ public class Pokemon {
    * Returns the weight of the Pokemon.
    * @return the weight of the Pokemon
    */
-  public int getWeight() {
+  public double getWeight() {
     return weight;
   }
 
@@ -112,7 +112,7 @@ public class Pokemon {
    * Sets the weight of the Pokemon in kilograms.
    * @param weight the weight of the Pokemon in kilograms to be set
    */
-  public void setWeight(int weight) {
+  public void setWeight(double weight) {
     this.weight = weight;
   }
 
