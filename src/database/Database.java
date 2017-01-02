@@ -20,6 +20,8 @@
 
 package database;
 
+import pokeapi.PokeApiFetcher;
+import pokedex.Pokemon;
 import util.Pair;
 
 import java.sql.Connection;
@@ -53,6 +55,7 @@ public class Database {
 
   /**
    * Defines the schema with three tables: pokemon, types, and pokemon_types.
+   * 
    * @param connection the connection to the database
    * @throws SQLException a SQL exception if there is an issue with executing a query
    */
@@ -72,22 +75,45 @@ public class Database {
 
   /**
    * Inserts the types of Pokemon into the types table.
-   * @param connection the connection to the datbase
+   * 
+   * @param connection the connection to the database
    * @param types a List of all the types of Pokemon (type id, type name)
    * @throws SQLException a SQL exception if there is an issue with executing the query
    */
   public static void populateTypesTable(Connection connection, List<Pair<Integer, String>> types)
       throws SQLException {
     PreparedStatement ps = null;
-    for (Pair<Integer, String> type: types) {
+    for (Pair<Integer, String> type : types) {
       // PreparedStatement used for inserting values into types tbale
-      ps =
-          connection.prepareStatement("INSERT INTO types(type_id, type) VALUES (?, ?)");
+      ps = connection.prepareStatement("INSERT INTO types(type_id, type) VALUES (?, ?)");
       // Sets the values to be inserted into the table
       ps.setInt(1, type.getLeft());
       ps.setString(2, type.getRight());
       ps.executeUpdate();
     }
     ps.close();
+  }
+
+  /**
+   * Inserts the Pokemon into the pokemon table.
+   * @param connection the connection to the database
+   * @throws SQLException a SQL exception if there is an issue with executing the query
+   */
+  public static void populatePokemonTable(Connection connection) throws SQLException {
+    PreparedStatement ps = null;
+    int count = PokeApiFetcher.getNumPokemon();
+    for (int index = 0; index < count; index++) {
+      Pokemon pokemon = PokeApiFetcher.getPokemon(index + 1);
+      // PreparedStatement used for inserting values into types tbale
+      ps = connection.prepareStatement(
+          "INSERT INTO pokemon(id, name, base_experience, height, weight) VALUES (?, ?, ?, ?, ?)");
+      // Sets the values to be inserted into the table
+      ps.setInt(1, pokemon.getId());
+      ps.setString(2, pokemon.getName());
+      ps.setInt(3, pokemon.getBaseExperience());
+      ps.setDouble(4, pokemon.getHeight());
+      ps.setDouble(5, pokemon.getWeight());
+      ps.executeUpdate();
+    }
   }
 }

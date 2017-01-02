@@ -1,18 +1,21 @@
 /**
- * This file is part of QuickPokedex.
+ *      This file is part of QuickPokedex.
  * 
- * @author Brian Lam
- * 
- *         This program is free software: you can redistribute it and/or modify it under the terms
- *         of the GNU Affero General Public License as published by the Free Software Foundation
- *         version 3 as published by the Free Software Foundation. You may not use, modify or
- *         distribute this program under any other version of the GNU Affero General Public License.
- * 
- *         This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- *         without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *         See the GNU Affero General Public License for more details. You should have received a
- *         copy of the GNU Affero General Public License along with this program. If not, see
- *         http://www.gnu.org/licenses.
+ *      @author Brian Lam
+ *         
+ *      This program is free software: you can redistribute it and/or modify 
+ *      it under the terms of the GNU Affero General Public License as
+ *      published by the Free Software Foundation version 3 as published by
+ *      the Free Software Foundation. You may not use, modify or distribute 
+ *      this program under any other version of the GNU Affero General Public
+ *      License.
+ *      
+ *      This program is distributed in the hope that it will be useful, but
+ *      WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *      Affero General Public License for more details. You should have
+ *      received a copy of the GNU Affero General Public License along with
+ *      this program. If not, see http://www.gnu.org/licenses.
  */
 
 package pokeapi;
@@ -65,14 +68,11 @@ public class PokeApiParser {
    * @return the newly created pokemon
    * @throws IOException errors when parsing
    */
-  public static Pokemon parsePokemon(String response) throws IOException {
+  public static Pokemon parsePokemon(String response, int id) throws IOException {
     // Creates a StringReader to read the API response string
     StringReader strReader = new StringReader(response);
     // Creates a JSON reader to read the JSON from the API response string
     JsonReader jsonReader = new JsonReader(strReader);
-
-
-    
     // Creates a JsonParser object to parse JSON
     JsonParser jsonParser = new JsonParser();
     // Gets the results array
@@ -81,29 +81,17 @@ public class PokeApiParser {
     JsonObject formsObj = jsonObj.get("forms").getAsJsonArray().get(0).getAsJsonObject();
     String name = formsObj.get("name").getAsString();
     Double weight = jsonObj.get("weight").getAsDouble() / 10;
+    Double height = jsonObj.get("height").getAsDouble() / 10;
+    int baseExperience = jsonObj.get("base_experience").getAsInt();
     
-    // Creates a new Pokemon
-    Pokemon pokemon = new Pokemon(); 
+    // Creates a new Pokemon with the information collected from the API
+    Pokemon pokemon = new Pokemon();
+    pokemon.setId(id);
     pokemon.setName(name);
     pokemon.setWeight(weight);
+    pokemon.setHeight(height);
+    pokemon.setBaseExperience(baseExperience);
     
-    
-    // Gets all their stats
-    System.out.println(jsonObj.get("stats").getAsJsonArray().get(0));
-    System.out.println(jsonObj.get("stats").getAsJsonArray().get(1));
-    System.out.println(jsonObj.get("stats").getAsJsonArray().get(2));
-    System.out.println(jsonObj.get("stats").getAsJsonArray().get(3));
-    System.out.println(jsonObj.get("stats").getAsJsonArray().get(4));
-    System.out.println(jsonObj.get("stats").getAsJsonArray().get(5));
-
-    // Gets all the types
-    System.out.println(jsonObj.get("types").getAsJsonArray());
-
-    
-   
-
-
-
     // Close the readers since we are done reading
     jsonReader.close();
     strReader.close();

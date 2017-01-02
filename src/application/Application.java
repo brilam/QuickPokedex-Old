@@ -44,9 +44,9 @@ public class Application {
       List<Pair<Integer, String>> types = PokeApiFetcher.getTypes();
       try {
         Database.populateTypesTable(connection, types);
+        Database.populatePokemonTable(connection);
       } catch (SQLException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
       }
     }
   }

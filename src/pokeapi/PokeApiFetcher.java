@@ -106,17 +106,18 @@ public class PokeApiFetcher {
    * Returns a newly created Pokemon object to represent a Pokemon.
    * @param id the id of the Pokemon
    */
-  public static void getPokemon(int id) {
+  public static Pokemon getPokemon(int id) {
     Pokemon pokemon = new Pokemon();
     try {
       // Makes a URL object given the Pokemon url
       URL url = new URL(API_URL + POKEMON_URL + id);
       // Gets the response of the GET request
       String response = getApiResponse(url);
-      PokeApiParser.parsePokemon(response);
+      pokemon = PokeApiParser.parsePokemon(response, id);
     } catch (IOException e) {
       System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
     }
+    return pokemon;
   }
 
   /**

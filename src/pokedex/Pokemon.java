@@ -31,6 +31,7 @@ public class Pokemon {
   private int id;
   private String name;
   private int baseExperience;
+  private double height;
   private double weight;
   private List<String> abilities;
   private List<String> moves;
@@ -282,6 +283,22 @@ public class Pokemon {
    */
   public void addAbility(String ability) {
     abilities.add(ability);
+  }
+  
+  /**
+   * Returns the height of the Pokemon in metres.
+   * @return the height of the Pokemon in metres
+   */
+  public double getHeight() {
+    return height;
+  }
+
+  /**
+   * Sets the height of the Pokemon in metres.
+   * @param height the height of the Pokemon in metres to set
+   */
+  public void setHeight(double height) {
+    this.height = height;
   }
   
   @Override
