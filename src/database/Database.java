@@ -90,8 +90,9 @@ public class Database {
       ps.setInt(1, type.getLeft());
       ps.setString(2, type.getRight());
       ps.executeUpdate();
+      // Closes each PreparedStatement after done executing
+      ps.close();
     }
-    ps.close();
   }
 
   /**
@@ -114,6 +115,8 @@ public class Database {
       ps.setDouble(4, pokemon.getHeight());
       ps.setDouble(5, pokemon.getWeight());
       ps.executeUpdate();
+      // Closes each PreparedStatement after done executing
+      ps.close();
     }
   }
 }

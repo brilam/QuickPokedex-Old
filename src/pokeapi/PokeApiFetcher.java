@@ -135,6 +135,7 @@ public class PokeApiFetcher {
     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
     connection.setRequestProperty("User-Agent", "");
     connection.setRequestMethod("GET");
+    
     // Get the response
     InputStream inputStream = connection.getInputStream();
     BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));

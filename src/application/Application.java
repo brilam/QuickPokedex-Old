@@ -40,6 +40,7 @@ public class Application {
    */
   public static void main(String[] args) {
     Connection connection = Database.createDatabase();
+    long start = System.currentTimeMillis();
     if (connection != null) {
       List<Pair<Integer, String>> types = PokeApiFetcher.getTypes();
       try {
@@ -49,5 +50,7 @@ public class Application {
         System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
       }
     }
+    long end = System.currentTimeMillis();
+    System.out.printf("Finished in %d ms.", end - start);
   }
 }
