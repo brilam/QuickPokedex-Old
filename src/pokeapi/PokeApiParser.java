@@ -143,8 +143,4 @@ public class PokeApiParser {
     strReader.close();
     return types;
   }
-  
-  public static void main(String[] args) {
-    PokeApiFetcher.getPokemon(1);
-  }
 }

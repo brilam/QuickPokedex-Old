@@ -41,6 +41,7 @@ public class PokeApiFetcher {
   public static final String POKEMON_URL = "pokemon/";
   public static final String TYPES_URL = "type/";
   private static final int FAILED = -1;
+  private static final String NO_NAME = "MISSINGNO";
 
   /**
    * Returns the number of Pokemon in the Pokedex by making a GET request to the 
@@ -115,7 +116,9 @@ public class PokeApiFetcher {
       String response = getApiResponse(url);
       pokemon = PokeApiParser.parsePokemon(response, id);
     } catch (IOException e) {
-      System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
+      // Fail-safe for when PokeAPI has no API response to consume, then just insert ID
+      pokemon.setId(id);
+      pokemon.setName(NO_NAME);
     }
     return pokemon;
   }
