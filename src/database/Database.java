@@ -27,6 +27,7 @@ import util.Pair;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -45,11 +46,23 @@ public class Database {
     Connection connection = null;
     try {
       // Create a database Connection
-      connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_FILE);
+      connection = getConnection(connection);
+      // Defines the schema
       defineSchema(connection);
     } catch (SQLException exception) {
       System.err.println("Error: " + exception.getMessage());
     }
+    return connection;
+  }
+  
+  /**
+   * Returns the SQLite connection to the database.
+   * @param connection an uninitialized Connection object
+   * @return the SQLite connection to the database
+   * @throws SQLException a SQL exception if there is any issue with getting the connection
+   */
+  public static Connection getConnection(Connection connection) throws SQLException {
+    connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_FILE);
     return connection;
   }
 
@@ -127,5 +140,39 @@ public class Database {
       // Closes each PreparedStatement after done executing
       ps.close();
     }
+  }
+  
+  /**
+   * Returns the number of rows (number of types) in the database.
+   * @param connection the connection to the database
+   * @return the number of rows (number of types) in the database
+   * @throws SQLException a SQL exception if there is an issue with executing the query
+   */
+  public static int getNumTypes(Connection connection) throws SQLException {
+    PreparedStatement ps = connection.prepareStatement("SELECT * FROM types");
+    ResultSet results = ps.executeQuery();
+    int numTypes = 0;
+    // Loops through the number of rows in the ResultSet to find the number of types
+    while (results.next()) {
+      numTypes++;
+    }
+    return numTypes;
+  }
+  
+  /**
+   * Returns the number of rows (number of Pokemon) in the database.
+   * @param connection the connection to the database
+   * @return the number of rows (number of Pokemon) in the database
+   * @throws SQLException a SQL exception if there is an issue with executing the query
+   */
+  public static int getNumPokemon(Connection connection) throws SQLException {
+    PreparedStatement ps = connection.prepareStatement("SELECT * FROM pokemon");
+    ResultSet results = ps.executeQuery();
+    int numPokemon = 0;
+    // Loops through the number of rows in the ResultSet to find the number of Pokemon
+    while (results.next()) {
+      numPokemon++;
+    }
+    return numPokemon;
   }
 }

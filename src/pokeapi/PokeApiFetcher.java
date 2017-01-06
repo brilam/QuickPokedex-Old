@@ -152,8 +152,4 @@ public class PokeApiFetcher {
     inputStream.close();
     return response;
   }
-  
-  public static void main(String[] args) {
-    getTypes();
-  }
 }

@@ -191,8 +191,4 @@ public class PokeApiParser {
     }
     return pokemon;
   }
-  
-  public static void main(String[] args) {
-    PokeApiFetcher.getPokemon(1);
-  }
 }
