@@ -21,6 +21,7 @@
 package pokeapi;
 
 import pokedex.Pokemon;
+import pokedex.Pokemon.PokemonBuilder;
 import util.Pair;
 
 import java.io.BufferedReader;
@@ -108,7 +109,7 @@ public class PokeApiFetcher {
    * @param id the id of the Pokemon
    */
   public static Pokemon getPokemon(int id) {
-    Pokemon pokemon = new Pokemon();
+    PokemonBuilder pokemon = new Pokemon.PokemonBuilder(id);
     try {
       // Makes a URL object given the Pokemon url
       URL url = new URL(API_URL + POKEMON_URL + id);
@@ -117,10 +118,9 @@ public class PokeApiFetcher {
       pokemon = PokeApiParser.parsePokemon(response, id);
     } catch (IOException e) {
       // Fail-safe for when PokeAPI has no API response to consume, then just insert ID
-      pokemon.setId(id);
-      pokemon.setName(NO_NAME);
+      pokemon = pokemon.setName(NO_NAME);
     }
-    return pokemon;
+    return pokemon.build();
   }
 
   /**

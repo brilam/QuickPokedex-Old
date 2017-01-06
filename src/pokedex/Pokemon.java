@@ -28,6 +28,7 @@ import java.util.List;
  * A class used to represent a Pokemon in the Pokedex.
  */
 public class Pokemon {
+  // All fields for a Pokemon
   private int id;
   private String name;
   private int baseExperience;
@@ -42,6 +43,185 @@ public class Pokemon {
   private int specialDefense;
   private int speed;
   private List<String> types;
+  
+  /**
+   * A class used to build a Pokemon.
+   */
+  public static class PokemonBuilder {
+    // Required field
+    private int id;
+    // Optional fields
+    private String name;
+    private int baseExperience;
+    private double height;
+    private double weight;
+    private List<String> abilities;
+    private List<String> moves;
+    private int hp;
+    private int attack;
+    private int defense;
+    private int specialAttack;
+    private int specialDefense;
+    private int speed;
+    private List<String> types;
+    
+    /**
+     * Builds a Pokemon with the specified fields.
+     * @return a newly created Pokemon with the specified fields
+     */
+    public Pokemon build() {
+      return new Pokemon(this);
+    }
+
+    /**
+     * Sets the Pokemon ID for the Pokemon to be built.
+     * @param id the ID of the Pokemon to be built
+     */
+    public PokemonBuilder(int id) {
+      this.id = id;
+    }
+    
+    /**
+     * Returns the PokemonBuilder instance after setting the name.
+     * @param name the name to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setName(String name) {
+      this.name = name;
+      return this;
+    }
+    
+    /**
+     * Returns the PokemonBuilder instance after setting the base experience.
+     * @param baseExperience the base experience to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setBaseExperience(int baseExperience) {
+      this.baseExperience = baseExperience;
+      return this;
+    }
+    
+    /**
+     * Returns the PokemonBuilder instance after setting the weight.
+     * @param weight the weight to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setWeight(double weight) {
+      this.weight = weight;
+      return this;
+    }
+    
+    /**
+     * Returns the PokemonBuilder instance after setting the abilities.
+     * @param abilities the abilities to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setAbilities(List<String> abilities) {
+      this.abilities = abilities;
+      return this;
+    }
+    
+    /**
+     * Returns the PokemonBuilder instance after setting the moves.
+     * @param moves the moves to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setMoves(List<String> moves) {
+      this.moves = moves;
+      return this;
+    }
+    
+    /**
+     * Returns the PokemonBuilder instance after setting the health points.
+     * @param hp the health points to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setHp(int hp) {
+      this.hp = hp;
+      return this;
+    }
+    
+    /**
+     * Returns the PokemonBuilder instance after setting the attack points.
+     * @param attack the attack points to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setAttack(int attack) {
+      this.attack = attack;
+      return this;
+    }
+    
+    /**
+     * Returns the PokemonBuilder instance after setting the defense points.
+     * @param defense the defense points to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setDefense(int defense) {
+      this.defense = defense;
+      return this;
+    }
+    
+    /**
+     * Returns the PokemonBuilder instance after setting the special attack points.
+     * @param specialAttack the special attack points to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setSpecialAttack(int specialAttack) {
+      this.specialAttack = specialAttack;
+      return this;
+    }
+    
+    /**
+     * Returns the PokemonBuilder instance after setting the special defense points.
+     * @param specialDefense the special defense points to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setSpecialDefense(int specialDefense) {
+      this.specialDefense = specialDefense;
+      return this;
+    }
+   
+    /**
+     * Returns the PokemonBuilder instance after setting the speed.
+     * @param speed the speed to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setSpeed(int speed) {
+      this.speed = speed;
+      return this;
+    }
+
+    /**
+     * Returns the PokemonBuilder instance after setting the height.
+     * @param height the height to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setHeight(double height) {
+      this.height = height;
+      return this;
+    }
+  }
+  
+  /**
+   * Creates a Pokemon with the specified fields indicated by the PokemonBuilder.
+   * @param builder the PokemonBuilder object which contains all the stats of the Pokemon
+   */
+  private Pokemon(PokemonBuilder builder) {
+    id = builder.id;
+    name = builder.name;
+    baseExperience = builder.baseExperience;
+    height = builder.height;
+    weight = builder.weight;
+    abilities = builder.abilities;
+    moves = builder.moves;
+    hp = builder.hp;
+    attack = builder.attack;
+    defense = builder.defense;
+    specialAttack = builder.specialAttack;
+    specialDefense = builder.specialDefense;
+    speed = builder.speed;
+    types = builder.types;
+  }
   
   /**
    * Creates a Pokemon with an empty list of abilities, moves
@@ -60,29 +240,13 @@ public class Pokemon {
   public int getId() {
     return id;
   }
-
-  /**
-   * Sets the Pokemon ID from the Pokedex.
-   * @param id of the Pokemon to be set
-   */
-  public void setId(int id) {
-    this.id = id;
-  }
-
+  
   /**
    * Returns the Pokemon's name.
    * @return the name of the Pokemon
    */
   public String getName() {
     return name;
-  }
-
-  /**
-   * Sets the Pokemon's name.
-   * @param the name of the Pokemon to be set
-   */
-  public void setName(String name) {
-    this.name = name;
   }
 
   /**
@@ -94,27 +258,11 @@ public class Pokemon {
   }
 
   /**
-   * Sets the base experience required to level up.
-   * @param baseExperience required to level up to be set
-   */
-  public void setBaseExperience(int baseExperience) {
-    this.baseExperience = baseExperience;
-  }
-
-  /**
    * Returns the weight of the Pokemon.
    * @return the weight of the Pokemon
    */
   public double getWeight() {
     return weight;
-  }
-
-  /**
-   * Sets the weight of the Pokemon in kilograms.
-   * @param weight the weight of the Pokemon in kilograms to be set
-   */
-  public void setWeight(double weight) {
-    this.weight = weight;
   }
 
   /**
@@ -126,27 +274,11 @@ public class Pokemon {
   }
 
   /**
-   * Set the abilities of the Pokemon.
-   * @param abilities the abilities of the Pokemon to be set
-   */
-  public void setAbilities(List<String> abilities) {
-    this.abilities = abilities;
-  }
-
-  /**
    * Returns a list of all possible moves that the Pokemon can learn.
    * @return the list of moves that the Pokemon can learn
    */
   public List<String> getMoves() {
     return moves;
-  }
-
-  /**
-   * Sets the list of moves that the Pokemon can learn.
-   * @param moves the moves that the Pokemon can learn to be set
-   */
-  public void setMoves(List<String> moves) {
-    this.moves = moves;
   }
 
   /**
@@ -156,29 +288,13 @@ public class Pokemon {
   public int getHp() {
     return hp;
   }
-
-  /**
-   * Sets the base health points of the Pokemon.
-   * @param hp the health points of the Pokemon to be set
-   */
-  public void setHp(int hp) {
-    this.hp = hp;
-  }
-
+  
   /**
    * Returns the base attack points of the Pokemon.
    * @return the base attack points of the Pokemon.
    */
   public int getAttack() {
     return attack;
-  }
-
-  /**
-   * Sets the base attack points of the Pokemon.
-   * @param attack the base attack points of the Pokemon to be set
-   */
-  public void setAttack(int attack) {
-    this.attack = attack;
   }
 
   /**
@@ -190,14 +306,6 @@ public class Pokemon {
   }
 
   /**
-   * Sets the base defense points of the Pokemon.
-   * @param defense the base defense points of the Pokemon to be set
-   */
-  public void setDefense(int defense) {
-    this.defense = defense;
-  }
-
-  /**
    * Returns the base special attack of the Pokemon.
    * @return the base specialAttack of the Pokemon
    */
@@ -205,14 +313,7 @@ public class Pokemon {
     return specialAttack;
   }
 
-  /**
-   * Sets the base special attack of the Pokemon.
-   * @param specialAttack the base special attack points of the Pokemon to be set
-   */
-  public void setSpecialAttack(int specialAttack) {
-    this.specialAttack = specialAttack;
-  }
-
+ 
   /**
    * Returns the base special defense points of the Pokemon.
    * @return the base special defense points of the Pokemon
@@ -222,27 +323,11 @@ public class Pokemon {
   }
 
   /**
-   * Sets the base special defense points of the Pokemon.
-   * @param specialDefense the base special defense points of the Pokemon to be set
-   */
-  public void setSpecialDefense(int specialDefense) {
-    this.specialDefense = specialDefense;
-  }
-
-  /**
    * Returns the base speed points of the Pokemon.
    * @return the base speed points of the Pokemon
    */
   public int getSpeed() {
     return speed;
-  }
-
-  /**
-   * Sets the base speed points of the Pokemon.
-   * @param speed the base speed points of the Pokemon to be set
-   */
-  public void setSpeed(int speed) {
-    this.speed = speed;
   }
 
   /**
@@ -292,17 +377,11 @@ public class Pokemon {
   public double getHeight() {
     return height;
   }
-
-  /**
-   * Sets the height of the Pokemon in metres.
-   * @param height the height of the Pokemon in metres to set
-   */
-  public void setHeight(double height) {
-    this.height = height;
-  }
   
   @Override
   public String toString() {
     return getName();
   }
+  
+  
 }

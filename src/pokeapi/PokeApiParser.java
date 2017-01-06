@@ -26,6 +26,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 import pokedex.Pokemon;
+import pokedex.Pokemon.PokemonBuilder;
 import util.Pair;
 
 import java.io.IOException;
@@ -68,7 +69,7 @@ public class PokeApiParser {
    * @return the newly created pokemon
    * @throws IOException errors when parsing
    */
-  public static Pokemon parsePokemon(String response, int id) throws IOException {
+  public static PokemonBuilder parsePokemon(String response, int id) throws IOException {
     // Creates a StringReader to read the API response string
     StringReader strReader = new StringReader(response);
     // Creates a JSON reader to read the JSON from the API response string
@@ -83,14 +84,19 @@ public class PokeApiParser {
     Double weight = jsonObj.get("weight").getAsDouble() / 10;
     Double height = jsonObj.get("height").getAsDouble() / 10;
     int baseExperience = jsonObj.get("base_experience").getAsInt();
+    JsonArray statsArray = jsonObj.get("stats").getAsJsonArray();
+    
+    // Loops through the number of stats
+    for (int index = 0; index < statsArray.size(); index++) {
+      JsonObject statElement = jsonObj.get("stats").getAsJsonArray().get(index).getAsJsonObject();
+      String statName = statElement.get("stat").getAsJsonObject().get("name").getAsString();
+      int baseStat = statElement.get("base_stat").getAsInt();
+    }
     
     // Creates a new Pokemon with the information collected from the API
-    Pokemon pokemon = new Pokemon();
-    pokemon.setId(id);
-    pokemon.setName(name);
-    pokemon.setWeight(weight);
-    pokemon.setHeight(height);
-    pokemon.setBaseExperience(baseExperience);
+    PokemonBuilder pokemon = new Pokemon.PokemonBuilder(id);
+    pokemon = pokemon.setName(name).setWeight(weight)
+        .setHeight(height).setBaseExperience(baseExperience);
     
     // Close the readers since we are done reading
     jsonReader.close();
@@ -142,5 +148,9 @@ public class PokeApiParser {
     jsonReader.close();
     strReader.close();
     return types;
+  }
+  
+  public static void main(String[] args) {
+    PokeApiFetcher.getPokemon(1);
   }
 }

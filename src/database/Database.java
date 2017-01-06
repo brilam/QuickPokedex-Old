@@ -103,7 +103,7 @@ public class Database {
   public static void populatePokemonTable(Connection connection) throws SQLException {
     PreparedStatement ps = null;
     int count = PokeApiFetcher.getNumPokemon();
-    for (int index = 0; index < count; index++) {
+    for (int index = 0; index < 10; index++) {
       Pokemon pokemon = PokeApiFetcher.getPokemon(index + 1);
       // PreparedStatement used for inserting values into types tbale
       ps = connection.prepareStatement(

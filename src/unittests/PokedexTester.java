@@ -37,20 +37,28 @@ public class PokedexTester {
   private Pokemon pokemon1;
   private Pokemon pokemon2;
 
+  /**
+   * Creates a Pokedex with two Pokemon for each test case.
+   */
   @Before
   public void setUp() {
     pokedex = new Pokedex(TEST_POKEDEX_SIZE);
-    pokemon1 = new Pokemon();
-    pokemon2 = new Pokemon();
-    pokemon1.setName("Bulbasaur");
-    pokemon2.setName("Ivysaur");
+    pokemon1 = new Pokemon.PokemonBuilder(1).setName("Bulbasaur").build();
+    pokemon2 = new Pokemon.PokemonBuilder(2).setName("Ivysaur").build();
   }
 
+  /**
+   * After each test case, empty out the Pokedex.
+   */
   @After
   public void tearDown() {
     pokedex.clear();
   }
 
+  /**
+   * Tests for adding one Pokemon into the Pokedex, and checks if the Pokedex
+   * is correct.
+   */
   @Test
   public void testAddOnePokemon() {
     pokedex.addPokemon(pokemon1);
@@ -59,6 +67,10 @@ public class PokedexTester {
     Assert.assertEquals(pokedex.getPokedex(), actualPokedex);
   }
 
+  /**
+   * Tests for adding multiple Pokemon into the Pokedex and checks if the Pokedex
+   * is correct.
+   */
   @Test
   public void testAddMultiplePokemon() {
     pokedex.addPokemon(pokemon1);
@@ -69,13 +81,16 @@ public class PokedexTester {
     Assert.assertEquals(pokedex.getPokedex(), actualPokedex);
   }
 
+  /**
+   * Tests for adding multiple Pokemon into the Pokedex and checks if the Pokedex
+   * is correct. It should expand to be one larger than its original size.
+   */
   @Test
   public void testAddToFullPokedex() {
-    Pokemon pokemon3 = new Pokemon();
+    Pokemon pokemon3 = new Pokemon.PokemonBuilder(3).setName("Venasaur").build();
     pokedex.addPokemon(pokemon1);
     pokedex.addPokemon(pokemon2);
     pokedex.addPokemon(pokemon3);
-    pokemon3.setName("Venasaur");
     List<Pokemon> actualPokedex = new ArrayList<>(2);
     actualPokedex.add(pokemon1);
     actualPokedex.add(pokemon2);
