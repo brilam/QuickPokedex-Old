@@ -27,6 +27,7 @@ import com.google.gson.stream.JsonReader;
 
 import pokedex.Pokemon;
 import pokedex.Pokemon.PokemonBuilder;
+import pokedex.PokemonType;
 import util.Pair;
 
 import java.io.IOException;
@@ -84,19 +85,16 @@ public class PokeApiParser {
     Double weight = jsonObj.get("weight").getAsDouble() / 10;
     Double height = jsonObj.get("height").getAsDouble() / 10;
     int baseExperience = jsonObj.get("base_experience").getAsInt();
-    JsonArray statsArray = jsonObj.get("stats").getAsJsonArray();
     
-    // Loops through the number of stats
-    for (int index = 0; index < statsArray.size(); index++) {
-      JsonObject statElement = jsonObj.get("stats").getAsJsonArray().get(index).getAsJsonObject();
-      String statName = statElement.get("stat").getAsJsonObject().get("name").getAsString();
-      int baseStat = statElement.get("base_stat").getAsInt();
-    }
-    
-    // Creates a new Pokemon with the information collected from the API
+    // Creates a new Pokemon with ID, name, weight, height, and base experience
     PokemonBuilder pokemon = new Pokemon.PokemonBuilder(id);
     pokemon = pokemon.setName(name).setWeight(weight)
         .setHeight(height).setBaseExperience(baseExperience);
+    
+    JsonArray statsArray = jsonObj.get("stats").getAsJsonArray();
+    
+    // Parses the Pokemon stats and returns back a PokemonBuilder object
+    parsePokemonStats(jsonObj, statsArray, pokemon);
     
     // Close the readers since we are done reading
     jsonReader.close();
@@ -141,13 +139,57 @@ public class PokeApiParser {
       jsonReader.nextName();
       // Gets the name
       String typeName = jsonReader.nextString();
-      Pair<Integer, String> type = new Pair<>(id, typeName);
+      PokemonType<Integer, String> type = new PokemonType<>(id, typeName);
       types.add(type);
     }
     // Close the readers since we are done reading
     jsonReader.close();
     strReader.close();
     return types;
+  }
+  
+  /**
+   * Given the results array as a JSON object, a JSON array of the stats, and the PokemonBuilder
+   * object which will be the Pokemon to be built, parses the stats from the API response, and
+   * returns the updated PokemonBuilder object for which a Pokemon is to be built.
+   * @param jsonObj the result array as a JSON object
+   * @param statsArray a JSON array of the stats (speed, special defense, special attack, defense,
+   *                   attack, hp)
+   * @param pokemon the PokemonBuilder object which is to be used to build a Pokemon
+   * @return the updated PokemonBuilder object with stats to be used to build a Pokemon
+   */
+  private static PokemonBuilder parsePokemonStats(JsonObject jsonObj, JsonArray statsArray, 
+      PokemonBuilder pokemon) {
+    // Loops through the number of stats
+    for (int index = 0; index < statsArray.size(); index++) {
+      JsonObject statElement = jsonObj.get("stats").getAsJsonArray().get(index).getAsJsonObject();
+      String statName = statElement.get("stat").getAsJsonObject().get("name").getAsString();
+      int baseStat = statElement.get("base_stat").getAsInt();
+      // Sets the appropriate stat with base stat as the number of points
+      switch (statName) {
+        case "speed":
+          pokemon = pokemon.setSpeed(baseStat);
+          break;
+        case "special-defense":
+          pokemon = pokemon.setSpecialDefense(baseStat);
+          break;
+        case "special-attack":
+          pokemon = pokemon.setSpecialAttack(baseStat);
+          break;
+        case "defense":
+          pokemon = pokemon.setDefense(baseStat);
+          break;
+        case "attack":
+          pokemon = pokemon.setAttack(baseStat);
+          break;
+        case "hp":
+          pokemon = pokemon.setHp(baseStat);
+          break;
+        default: // Never reached as it will always be one of the cases above
+          break;
+      }
+    }
+    return pokemon;
   }
   
   public static void main(String[] args) {

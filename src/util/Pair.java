@@ -22,10 +22,9 @@ package util;
 
 /**
  * A class used to represent a Pair of values (these values are related to one
- * another). Currently being used to represent types (there is an ID, and type
- * name).
+ * another).
  */
-public class Pair<K, V> {
+public abstract class Pair<K, V> {
   private K left;
   private V right;
   

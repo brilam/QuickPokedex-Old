@@ -64,7 +64,8 @@ public class Database {
     Statement statement = connection.createStatement();
     // Creates a pokemon table
     statement.executeUpdate("CREATE TABLE pokemon(id INTEGER PRIMARY KEY, name STRING, "
-        + "base_experience INTEGER, height INTEGER, weight INTEGER)");
+        + "base_experience INTEGER, height FLOAT, weight FLOAT, hp INTEGER, attack INTEGER, "
+        + "defense INTEGER, special_attack INTEGER, special_defense INTEGER, speed INTEGER)");
     // Creates a types table
     statement.executeUpdate("CREATE TABLE types(type_id INTEGER PRIMARY KEY, type STRING)");
     // Creates a Pokemon types table
@@ -103,17 +104,25 @@ public class Database {
   public static void populatePokemonTable(Connection connection) throws SQLException {
     PreparedStatement ps = null;
     int count = PokeApiFetcher.getNumPokemon();
-    for (int index = 0; index < 10; index++) {
+    for (int index = 0; index < count; index++) {
       Pokemon pokemon = PokeApiFetcher.getPokemon(index + 1);
       // PreparedStatement used for inserting values into types tbale
       ps = connection.prepareStatement(
-          "INSERT INTO pokemon(id, name, base_experience, height, weight) VALUES (?, ?, ?, ?, ?)");
+          "INSERT INTO pokemon(id, name, base_experience, height, weight, hp, "
+          + "attack, defense, special_attack, special_defense, speed) "
+          + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
       // Sets the values to be inserted into the table
       ps.setInt(1, pokemon.getId());
       ps.setString(2, pokemon.getName());
       ps.setInt(3, pokemon.getBaseExperience());
       ps.setDouble(4, pokemon.getHeight());
       ps.setDouble(5, pokemon.getWeight());
+      ps.setInt(6, pokemon.getHp());
+      ps.setInt(7, pokemon.getAttack());
+      ps.setInt(8, pokemon.getDefense());
+      ps.setInt(9, pokemon.getSpecialAttack());
+      ps.setInt(10, pokemon.getSpecialDefense());
+      ps.setInt(11, pokemon.getSpeed());
       ps.executeUpdate();
       // Closes each PreparedStatement after done executing
       ps.close();
