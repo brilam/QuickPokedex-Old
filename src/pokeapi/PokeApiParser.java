@@ -138,7 +138,8 @@ public class PokeApiParser {
       String url = jsonReader.nextString();
       // Parsing the substringed URL to get the ID
       int id = Integer
-          .parseInt(url.substring(url.indexOf(PokeApiFetcher.TYPES_URL) + 5, url.length() - 1));
+          .parseInt(url.substring(url.indexOf(PokeApiFetcher.TYPES_URL) 
+              + PokeApiFetcher.TYPES_URL.length(), url.length() - 1));
       // Skips through the name
       jsonReader.nextName();
       // Gets the name
@@ -214,7 +215,8 @@ public class PokeApiParser {
       // Gets the type url as a String (it contains the ID at the end of the URL)
       String typeUrl = typeObj.get("url").getAsString();
       // Substrings only the ID
-      String type = typeUrl.substring(typeUrl.indexOf("type/") + 5, typeUrl.length() - 1);
+      String type = typeUrl.substring(typeUrl.indexOf(PokeApiFetcher.TYPES_URL) 
+          + PokeApiFetcher.TYPES_URL.length(), typeUrl.length() - 1);
       // Adds the type to the list of types
       types.add(Integer.parseInt(type));
     }

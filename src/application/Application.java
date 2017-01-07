@@ -24,6 +24,7 @@ import database.Database;
 import pokeapi.PokeApiFetcher;
 import util.Pair;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -39,18 +40,28 @@ public class Application {
    * @param args no arguments needed
    */
   public static void main(String[] args) {
-    Connection connection = Database.createDatabase();
-    long start = System.currentTimeMillis();
-    if (connection != null) {
-      List<Pair<Integer, String>> types = PokeApiFetcher.getTypes();
-      try {
+    Connection connection = null;
+    try {
+      if (hasPokedex()) {
+        connection = Database.getConnection(connection);
+        System.out.println("Pokedex is ready.");
+      } else {
+        connection = Database.createDatabase();
+        List<Pair<Integer, String>> types = PokeApiFetcher.getTypes();
         Database.populateTypesTable(connection, types);
         Database.populatePokemonTable(connection);
-      } catch (SQLException e) {
-        System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
       }
+    } catch (SQLException e) {
+      System.err.println("Uh-oh! Encountered an error: " + e.getMessage());
     }
-    long end = System.currentTimeMillis();
-    System.out.printf("Finished in %d ms.", end - start);
+  }
+ 
+  /**
+   * Returns whether or not pokedex.db exists.
+   * @return whether or not pokedex.db exists
+   */
+  public static boolean hasPokedex() {
+    File file = new File(Database.DATABASE_FILE);
+    return file.exists();
   }
 }

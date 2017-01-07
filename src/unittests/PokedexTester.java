@@ -97,6 +97,4 @@ public class PokedexTester {
     actualPokedex.add(pokemon3);
     Assert.assertEquals(pokedex.getPokedex(), actualPokedex);
   }
-
-
 }

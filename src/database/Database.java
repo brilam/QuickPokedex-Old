@@ -68,7 +68,6 @@ public class Database {
 
   /**
    * Defines the schema with three tables: pokemon, types, and pokemon_types.
-   * 
    * @param connection the connection to the database
    * @throws SQLException a SQL exception if there is an issue with executing a query
    */
@@ -112,7 +111,8 @@ public class Database {
   }
 
   /**
-   * Inserts the Pokemon into the pokemon table.
+   * Inserts the Pokemon into the pokemon table, and insert its types into pokemon_types 
+   * table.
    * @param connection the connection to the database
    * @throws SQLException a SQL exception if there is an issue with executing the query
    */
@@ -140,6 +140,7 @@ public class Database {
       ps.setInt(11, pokemon.getSpeed());
       ps.executeUpdate();
       
+      // If the Pokemon has types, then populate the pokemon_types table
       if (pokemon.getTypes() != null) {
         populatePokemonTypeTable(connection, ps, pokemon);
       }
@@ -149,6 +150,13 @@ public class Database {
     }
   }
   
+  /**
+   * Inserts the Pokemons' type(s) into the pokemon_types table.
+   * @param connection the connection to the database
+   * @param ps a PreparedStatement
+   * @param pokemon the Pokemon with information to be inserted
+   * @throws SQLException  a SQL exception if there is an issue with executing the query
+   */
   private static void populatePokemonTypeTable(Connection connection, PreparedStatement ps, 
       Pokemon pokemon) throws SQLException {
     // Loops through all the types for the Pokemon
@@ -159,6 +167,8 @@ public class Database {
       ps.setInt(1, pokemon.getId());
       ps.setInt(2, pokemon.getTypes().get(index));
       ps.executeUpdate();
+      // Closes PreparedStatement after each insert
+      ps.close();
     }
   }
 
@@ -176,6 +186,9 @@ public class Database {
     while (results.next()) {
       numTypes++;
     }
+    // Closes up the ResultSet and PreparedStatement after everything is done
+    results.close();
+    ps.close();
     return numTypes;
   }
   
@@ -193,6 +206,9 @@ public class Database {
     while (results.next()) {
       numPokemon++;
     }
+    // Closes up the ResultSet and PreparedStatement after everything is done
+    results.close();
+    ps.close();
     return numPokemon;
   }
 }
