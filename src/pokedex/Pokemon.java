@@ -42,7 +42,7 @@ public class Pokemon {
   private int specialAttack;
   private int specialDefense;
   private int speed;
-  private List<String> types;
+  private List<Integer> types;
   
   /**
    * A class used to build a Pokemon.
@@ -63,7 +63,7 @@ public class Pokemon {
     private int specialAttack;
     private int specialDefense;
     private int speed;
-    private List<String> types;
+    private List<Integer> types;
     
     /**
      * Builds a Pokemon with the specified fields.
@@ -200,6 +200,16 @@ public class Pokemon {
       this.height = height;
       return this;
     }
+    
+    /**
+     * Returns the PokemonBuilder instance after setting the types.
+     * @param height the types to be set
+     * @return the PokemonBuilder instance to be used to build a Pokemon
+     */
+    public PokemonBuilder setTypes(List<Integer> types) {
+      this.types = types;
+      return this;
+    }
   }
   
   /**
@@ -312,7 +322,6 @@ public class Pokemon {
   public int getSpecialAttack() {
     return specialAttack;
   }
-
  
   /**
    * Returns the base special defense points of the Pokemon.
@@ -334,23 +343,15 @@ public class Pokemon {
    * Returns the types of the Pokemon.
    * @return the types of the Pokemon
    */
-  public List<String> getTypes() {
+  public List<Integer> getTypes() {
     return types;
   }
 
   /**
-   * Sets the types of the Pokemon.
-   * @param types the types of the Pokemon to be set
-   */
-  public void setTypes(List<String> types) {
-    this.types = types;
-  }
-
-  /**
    * Adds the type to the types of the Pokemon.
-   * @param name the type to add to the types
+   * @param type the ID of the type to add to the types
    */
-  public void addType(String type) {
+  public void addType(int type) {
     types.add(type);
   }
 
@@ -359,7 +360,7 @@ public class Pokemon {
    * @param move the move that a Pokemon can learn
    */
   public void addMoves(String move) {
-    types.add(move);
+    moves.add(move);
   }
 
   /**

@@ -23,8 +23,8 @@ package pokedex;
 import util.Pair;
 
 
-public class PokemonType<K, V> extends Pair<Integer,String> {
-  public PokemonType(int id, String typeName) {
+public class PokemonTypePair<K, V> extends Pair<Integer,String> {
+  public PokemonTypePair(int id, String typeName) {
     super(id, typeName);
   }
   

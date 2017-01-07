@@ -82,9 +82,11 @@ public class Database {
     // Creates a types table
     statement.executeUpdate("CREATE TABLE types(type_id INTEGER PRIMARY KEY, type STRING)");
     // Creates a Pokemon types table
-    statement.executeUpdate("CREATE TABLE pokemon_types(pokemon_id INTEGER PRIMARY KEY, "
-        + "type_id INTEGER UNIQUE, FOREIGN KEY(pokemon_id) REFERENCES pokemon(id), "
+    statement.executeUpdate("CREATE TABLE pokemon_types(pokemon_id INTEGER, "
+        + "type_id INTEGER, FOREIGN KEY(pokemon_id) REFERENCES pokemon(id), "
         + "FOREIGN KEY(type_id) REFERENCES types(type_id))");
+    // Closes statement after done defining schema
+    statement.close();
   }
 
   /**
@@ -137,11 +139,29 @@ public class Database {
       ps.setInt(10, pokemon.getSpecialDefense());
       ps.setInt(11, pokemon.getSpeed());
       ps.executeUpdate();
+      
+      if (pokemon.getTypes() != null) {
+        populatePokemonTypeTable(connection, ps, pokemon);
+      }
+      
       // Closes each PreparedStatement after done executing
       ps.close();
     }
   }
   
+  private static void populatePokemonTypeTable(Connection connection, PreparedStatement ps, 
+      Pokemon pokemon) throws SQLException {
+    // Loops through all the types for the Pokemon
+    for (int index = 0; index < pokemon.getTypes().size(); index++) {
+      // Inserts the information into the pokemon_type table
+      ps = connection.prepareStatement("INSERT INTO pokemon_types(pokemon_id, type_id) "
+          + "VALUES (?, ?)");
+      ps.setInt(1, pokemon.getId());
+      ps.setInt(2, pokemon.getTypes().get(index));
+      ps.executeUpdate();
+    }
+  }
+
   /**
    * Returns the number of rows (number of types) in the database.
    * @param connection the connection to the database
