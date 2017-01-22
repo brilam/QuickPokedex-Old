@@ -31,7 +31,7 @@ import pokedex.Pokemon;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PokedexTester {
+public class PokedexTest {
   private static final int TEST_POKEDEX_SIZE = 2;
   private Pokedex pokedex;
   private Pokemon pokemon1;
@@ -78,23 +78,6 @@ public class PokedexTester {
     List<Pokemon> actualPokedex = new ArrayList<>();
     actualPokedex.add(pokemon1);
     actualPokedex.add(pokemon2);
-    Assert.assertEquals(pokedex.getPokedex(), actualPokedex);
-  }
-
-  /**
-   * Tests for adding multiple Pokemon into the Pokedex and checks if the Pokedex
-   * is correct. It should expand to be one larger than its original size.
-   */
-  @Test
-  public void testAddToFullPokedex() {
-    Pokemon pokemon3 = new Pokemon.PokemonBuilder(3).setName("Venasaur").build();
-    pokedex.addPokemon(pokemon1);
-    pokedex.addPokemon(pokemon2);
-    pokedex.addPokemon(pokemon3);
-    List<Pokemon> actualPokedex = new ArrayList<>(2);
-    actualPokedex.add(pokemon1);
-    actualPokedex.add(pokemon2);
-    actualPokedex.add(pokemon3);
     Assert.assertEquals(pokedex.getPokedex(), actualPokedex);
   }
 }

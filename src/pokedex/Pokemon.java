@@ -384,5 +384,35 @@ public class Pokemon {
     return getName();
   }
   
+  /**
+   * Returns true if all the Pokemon's field matches the current instance.
+   * @param pokemon the Pokemon object to be compared
+   * @return whether or not all the fields match
+   */
+  private boolean checkAllFields(Pokemon pokemon) {
+    return this.id == pokemon.getId() && this.name.equals(pokemon.getName())
+        && this.hp == pokemon.getHp() && this.speed == pokemon.getSpeed()
+        && this.specialDefense == pokemon.getSpecialDefense()
+        && this.specialAttack == pokemon.getSpecialAttack()
+        && this.attack == pokemon.getAttack()
+        && this.defense == pokemon.getDefense()
+        && this.height == pokemon.getHeight()
+        && this.weight == pokemon.getWeight()
+        && this.types.equals(pokemon.getTypes())
+        && this.baseExperience == pokemon.getBaseExperience();
+  }
   
+  @Override
+  public boolean equals(Object object) {
+    // Checks if the classes are the same
+    if (getClass() != object.getClass()) {
+      return false;
+    } else { // If they are the same, check all the field
+      Pokemon pokemon = (Pokemon) object;
+      if (checkAllFields(pokemon)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

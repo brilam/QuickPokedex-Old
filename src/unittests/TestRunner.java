@@ -30,13 +30,21 @@ public class TestRunner {
    * @param args no arguments required
    */
   public static void main(String[] args) {
-    Result result = JUnitCore.runClasses(PokedexTester.class);
+    Result result = JUnitCore.runClasses(PokedexTest.class);
 
     System.out.println("Running tests for Pokedex...");
     for (Failure failure : result.getFailures()) {
       System.out.println(failure.toString());
     }
+    
+    result  = JUnitCore.runClasses(PokeApiParserTest.class);
+    
+    System.out.println("Running tests for PokeApiParser...");
+    
+    for (Failure failure : result.getFailures()) {
+      System.out.println(failure.toString());
+    }
 
-    System.out.println("Everything is working!");
+    System.out.println("Everything has been tested!");
   }
 }
