@@ -193,6 +193,20 @@ public class Database {
   }
   
   /**
+   * Returns the last completed Pokemon entry (when the name isn't MISSINGNO).
+   * @param connection the connection to the database
+   * @return the id of the last completed Pokemon entry
+   * @throws SQLException a SQL exception if there is an issue with executing the query
+   */
+  public static int getLastCompletePokemon(Connection connection) throws SQLException {
+    PreparedStatement ps = connection.prepareStatement("SELECT * FROM pokemon WHERE "
+        + "name != \"MISSINGNO\" ORDER BY id DESC");
+    ResultSet results = ps.executeQuery();
+    int id = results.getInt("id");
+    return id;
+  }
+  
+  /**
    * Returns the number of rows (number of Pokemon) in the database.
    * @param connection the connection to the database
    * @return the number of rows (number of Pokemon) in the database

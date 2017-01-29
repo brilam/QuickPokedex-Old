@@ -103,19 +103,6 @@ public class PokeApiParserTest {
     }
   }
   
-  @Test
-  public void testParseTypes() {
-    try {
-      // Reads the types.json file from resources
-      BufferedReader br = new BufferedReader(new FileReader(POKEMON_PATH));
-      // Gets the JSON file as a String
-      String response = jsonToString(br);
-      // Gets the expected types and checks if it matches
-      List<Pair<Integer, String>> expectedTypes = PokeApiParser.parseTypes(response);
-      // Creates the actual types and gets it
-    }
-  }
-  
   private String jsonToString(BufferedReader br) throws IOException {
     String currentLine;
     String response = "";
