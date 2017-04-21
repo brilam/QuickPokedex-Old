@@ -20,16 +20,14 @@
 
 package unittests;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import pokedex.Pokedex;
 import pokedex.Pokemon;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PokedexTest {
   private static final int TEST_POKEDEX_SIZE = 2;

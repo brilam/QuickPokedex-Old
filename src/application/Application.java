@@ -21,13 +21,12 @@
 package application;
 
 import database.Database;
-import pokeapi.PokeApiFetcher;
-import util.Pair;
-
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import pokeapi.PokeApiFetcher;
+import util.Pair;
 
 /**
  * This class is intended to simulate the Android application on
