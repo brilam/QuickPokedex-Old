@@ -203,7 +203,7 @@ public class Pokemon {
     
     /**
      * Returns the PokemonBuilder instance after setting the types.
-     * @param height the types to be set
+     * @param types the types to be set
      * @return the PokemonBuilder instance to be used to build a Pokemon
      */
     public PokemonBuilder setTypes(List<Integer> types) {

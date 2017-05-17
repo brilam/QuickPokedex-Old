@@ -20,20 +20,16 @@
 
 package unittests;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import pokeapi.PokeApiParser;
-import pokedex.Pokemon;
-import pokedex.Pokemon.PokemonBuilder;
-import pokedex.PokemonTypePair;
-import util.Pair;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
+import pokeapi.PokeApiParser;
+import pokedex.Pokemon;
+import pokedex.Pokemon.PokemonBuilder;
 
 public class PokeApiParserTest {
   private static final int ACTUAL_COUNT = 811;

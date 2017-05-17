@@ -20,10 +20,6 @@
 
 package pokeapi;
 
-import pokedex.Pokemon;
-import pokedex.Pokemon.PokemonBuilder;
-import util.Pair;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +28,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import pokedex.Pokemon;
+import pokedex.Pokemon.PokemonBuilder;
+import util.Pair;
 
 /**
  * This class is used to fetch information from PokeAPI, and this information is to be stored into

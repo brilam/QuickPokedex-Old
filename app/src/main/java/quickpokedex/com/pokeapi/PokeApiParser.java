@@ -25,15 +25,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import pokedex.Pokemon;
-import pokedex.Pokemon.PokemonBuilder;
-import pokedex.PokemonTypePair;
-import util.Pair;
-
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import pokedex.Pokemon;
+import pokedex.Pokemon.PokemonBuilder;
+import pokedex.PokemonTypePair;
+import util.Pair;
 
 /**
  * A class used to parse the JSON from the response after making a PokeAPI GET request.

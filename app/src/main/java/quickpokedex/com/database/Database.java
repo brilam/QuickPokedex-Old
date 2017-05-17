@@ -20,17 +20,17 @@
 
 package database;
 
-import pokeapi.PokeApiFetcher;
-import pokedex.Pokemon;
-import util.Pair;
-
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import pokeapi.PokeApiFetcher;
+import pokedex.Pokemon;
+import util.Pair;
 
 /**
  * A class used to represent the database containing all of our information needed for our Pokedex.
@@ -77,7 +77,8 @@ public class Database {
     // Creates a pokemon table
     statement.executeUpdate("CREATE TABLE pokemon(id INTEGER PRIMARY KEY, name STRING, "
         + "base_experience INTEGER, height FLOAT, weight FLOAT, hp INTEGER, attack INTEGER, "
-        + "defense INTEGER, special_attack INTEGER, special_defense INTEGER, speed INTEGER)");
+        + "defense INTEGER, special_attack INTEGER, special_defense INTEGER, speed INTEGER, "
+        + "modified DATE)");
     // Creates a types table
     statement.executeUpdate("CREATE TABLE types(type_id INTEGER PRIMARY KEY, type STRING)");
     // Creates a Pokemon types table
@@ -121,11 +122,11 @@ public class Database {
     int count = PokeApiFetcher.getNumPokemon();
     for (int index = 0; index < count; index++) {
       Pokemon pokemon = PokeApiFetcher.getPokemon(index + 1);
-      // PreparedStatement used for inserting values into types tbale
+      // PreparedStatement used for inserting values into types table
       ps = connection.prepareStatement(
           "INSERT INTO pokemon(id, name, base_experience, height, weight, hp, "
-          + "attack, defense, special_attack, special_defense, speed) "
-          + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+          + "attack, defense, special_attack, special_defense, speed, modified) "
+          + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
       // Sets the values to be inserted into the table
       ps.setInt(1, pokemon.getId());
       ps.setString(2, pokemon.getName());
@@ -138,6 +139,8 @@ public class Database {
       ps.setInt(9, pokemon.getSpecialAttack());
       ps.setInt(10, pokemon.getSpecialDefense());
       ps.setInt(11, pokemon.getSpeed());
+      Date currentDate = new Date(new java.util.Date().getTime());
+      ps.setDate(12, currentDate);
       ps.executeUpdate();
       
       // If the Pokemon has types, then populate the pokemon_types table
